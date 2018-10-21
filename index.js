@@ -9,7 +9,7 @@ const pack = require('./package.json')
 
 let program = require('commander')
 const npm = (os.platform() === 'win32') ? 'npm.cmd' : 'npm'
-const nodemon = (os.platform() === 'win32') ? 'nodemon.cmd' : 'nodemon'
+// const nodemon = (os.platform() === 'win32') ? 'nodemon.cmd' : 'nodemon'
 
 program
     .command('init <name>')
@@ -51,9 +51,7 @@ program
 
             case 'bot':
                 {
-                    child.execFileSync(nodemon, {
-                        stdio: 'inherit',
-                    })
+                    shell.exec('node node_modules/nodemon/bin/nodemon.js')
                 }
                 break
             default:
