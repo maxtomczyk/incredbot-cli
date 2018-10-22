@@ -51,7 +51,9 @@ program
 
             case 'bot':
                 {
-                    shell.exec('node node_modules/nodemon/bin/nodemon.js')
+                    child.execFileSync('node', ['./node_modules/nodemon/bin/nodemon.js'], {
+                        stdio: 'inherit'
+                    })
                 }
                 break
             default:
