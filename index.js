@@ -85,4 +85,23 @@ program
     }
   })
 
+program
+  .command('database <operation>')
+  .action((operation, cmd) => {
+    switch (operation) {
+      case 'setup':
+        try {
+          child.execFileSync('node', ['init_db.js'], {
+            stdio: 'inherit',
+            cwd: `./node_modules/incredbot-cms/scripts`
+          })
+          console.log(chalk.green(`\nDatabase has been setted up successfully!`))
+        } catch (e) {
+          console.log(chalk.red('\nAn error occured during setting up a database. Details should be logged above.'))
+        }
+        break
+      default:
+    }
+  })
+
 program.parse(process.argv)
