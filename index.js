@@ -27,7 +27,7 @@ program
       cwd: `./${name}`
     })
     console.log(chalk.blue(`\nStarting installation in '${name}'...\n`))
-    child.execFileSync(npm, ['install', 'maxtomczyk/incredbot-cms', '--save'], {
+    child.execFileSync(npm, ['install', 'maxtomczyk/incredbot-cms#0.2.0', '--save'], {
       stdio: 'inherit',
       cwd: `./${name}`
     })
