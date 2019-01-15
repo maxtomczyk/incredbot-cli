@@ -12,8 +12,8 @@ const npm = (os.platform() === 'win32') ? 'npm.cmd' : 'npm'
 // const nodemon = (os.platform() === 'win32') ? 'nodemon.cmd' : 'nodemon'
 
 program
-  .command('init <name>')
-  .action((name, cmd) => {
+  .command('init <name> <version>')
+  .action((name, version, cmd) => {
     console.log(chalk.blue(`\nRunning incredbot-cli - version ${pack.version}`))
     console.log(chalk.blue(`\nCreating directory '${name}'...`))
     shell.exec(`mkdir ${name}`)
@@ -27,7 +27,7 @@ program
       cwd: `./${name}`
     })
     console.log(chalk.blue(`\nStarting installation in '${name}'...\n`))
-    child.execFileSync(npm, ['install', 'maxtomczyk/incredbot-cms#0.2.0', '--save'], {
+    child.execFileSync(npm, ['install', `maxtomczyk/incredbot-cms#${version}`, '--save'], {
       stdio: 'inherit',
       cwd: `./${name}`
     })
