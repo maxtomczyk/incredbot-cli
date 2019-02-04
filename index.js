@@ -9,12 +9,11 @@ const pack = require('./package.json')
 
 let program = require('commander')
 const npm = (os.platform() === 'win32') ? 'npm.cmd' : 'npm'
-// const nodemon = (os.platform() === 'win32') ? 'nodemon.cmd' : 'nodemon'
 
 program
   .command('init <name> <version>')
   .action((name, version, cmd) => {
-    console.log(chalk.blue(`\nRunning incredbot-cli - version ${pack.version}`))
+    console.log(chalk.blue(`\nRunning powerbot-cli - version ${pack.version}`))
     console.log(chalk.blue(`\nCreating directory '${name}'...`))
     shell.exec(`mkdir ${name}`)
     console.log(chalk.blue('Running npm init...\n'))
@@ -27,23 +26,23 @@ program
       cwd: `./${name}`
     })
     console.log(chalk.blue(`\nStarting installation in '${name}'...\n`))
-    child.execFileSync(npm, ['install', `maxtomczyk/incredbot-cms#${version}`, '--save'], {
+    child.execFileSync(npm, ['install', `maxtomczyk/powerbot-cms#${version}`, '--save'], {
       stdio: 'inherit',
       cwd: `./${name}`
     })
-    console.log(chalk.green(`\nProject initialized successfully. Now you need to configure your database connection in config.js file and then run 'incredbot database setup' inside project directory.`))
+    console.log(chalk.green(`\nProject initialized successfully. Now you need to configure your database connection in config.js file and then run 'powerbot database setup' inside project directory.`))
   })
 
 program
   .command('dev <end>')
   .action((end, cmd) => {
-    if (!fs.existsSync('./node_modules/incredbot-cms/index.js')) return console.log(chalk.red('\nNot an incredbot-cms project directory!'))
+    if (!fs.existsSync('./node_modules/powerbot-cms/index.js')) return console.log(chalk.red('\nNot an powerbot-cms project directory!'))
 
     switch (end) {
       case 'cms':
         child.execFileSync(npm, ['run', 'dev'], {
           stdio: 'inherit',
-          cwd: `./node_modules/incredbot-cms`
+          cwd: `./node_modules/powerbot-cms`
         })
         break
 
@@ -60,23 +59,23 @@ program
 program
   .command('create <object> <name>')
   .action((object, name, cmd) => {
-    if (!fs.existsSync('./node_modules/incredbot-cms/index.js')) return console.log(chalk.red('\nNot an incredbot-cms project directory!'))
+    if (!fs.existsSync('./node_modules/powerbot-cms/index.js')) return console.log(chalk.red('\nNot an powerbot-cms project directory!'))
 
     switch (object) {
       case 'view':
-        const viewDuplicate = fs.existsSync(`./node_modules/incredbot-cms/src/views/${name}.vue`)
+        const viewDuplicate = fs.existsSync(`./node_modules/powerbot-cms/src/views/${name}.vue`)
         if (viewDuplicate) return console.log(chalk.red(`\nThis view name is already used. If it's not yours it's probably one of reserved names.`))
-        fs.copyFileSync('./node_modules/incredbot-cms/scripts/files/EmptyVueFile.vue', `./cms/views/${name}.vue`)
-        fs.symlinkSync(`../../../../cms/views/${name}.vue`, `./node_modules/incredbot-cms/src/views/${name}.vue`)
+        fs.copyFileSync('./node_modules/powerbot-cms/scripts/files/EmptyVueFile.vue', `./cms/views/${name}.vue`)
+        fs.symlinkSync(`../../../../cms/views/${name}.vue`, `./node_modules/powerbot-cms/src/views/${name}.vue`)
         console.log(chalk.green(`\n'${name}' view has been created!`))
         console.log(chalk.blue(`\nDon't forget to create route in router.js. You may also want to create CMS menu link in App.vue`))
         break
 
       case 'component':
-        const componentDuplicate = fs.existsSync(`./node_modules/incredbot-cms/src/components/${name}.vue`)
+        const componentDuplicate = fs.existsSync(`./node_modules/powerbot-cms/src/components/${name}.vue`)
         if (componentDuplicate) return console.log(chalk.red(`\nThis component name is already used. If it's not yours it's probably one of reserved names.`))
-        fs.copyFileSync('./node_modules/incredbot-cms/scripts/files/EmptyVueFile.vue', `./cms/components/${name}.vue`)
-        fs.symlinkSync(`../../../../cms/components/${name}.vue`, `./node_modules/incredbot-cms/src/components/${name}.vue`)
+        fs.copyFileSync('./node_modules/powerbot-cms/scripts/files/EmptyVueFile.vue', `./cms/components/${name}.vue`)
+        fs.symlinkSync(`../../../../cms/components/${name}.vue`, `./node_modules/powerbot-cms/src/components/${name}.vue`)
         console.log(chalk.green(`\n'${name}' component has been created!`))
         console.log(chalk.blue(`\nDon't forget to register component in main.js.`))
         break
@@ -93,10 +92,11 @@ program
         try {
           child.execFileSync('node', ['init_db.js'], {
             stdio: 'inherit',
-            cwd: `./node_modules/incredbot-cms/scripts`
+            cwd: `./node_modules/powerbot-cms/scripts`
           })
           console.log(chalk.green(`\nDatabase has been setted up successfully!`))
         } catch (e) {
+          console.error(e)
           console.log(chalk.red('\nAn error occured during setting up a database. Details should be logged above.'))
         }
         break

@@ -1,24 +1,24 @@
 {
-  "name": "incredbot-cli",
+  "name": "powerbot-cli",
   "version": "1.0.0",
-  "description": "Command line tool for incredbot-cms projects.",
+  "description": "Command line tool for powerbot-cms projects.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maxtomczyk/incredbot-cli.git"
+    "url": "git+https://github.com/maxtomczyk/powerbot-cli.git"
   },
   "bin": {
-    "incredbot": "./index.js"
+    "powerbot": "./index.js"
   },
   "author": "Maksymilian Tomczyk <m.tomczyk.dev@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/maxtomczyk/incredbot-cli/issues"
+    "url": "https://github.com/maxtomczyk/powerbot-cli/issues"
   },
-  "homepage": "https://github.com/maxtomczyk/incredbot-cli#readme",
+  "homepage": "https://github.com/maxtomczyk/powerbot-cli#readme",
   "dependencies": {
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
