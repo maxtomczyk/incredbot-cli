@@ -93,7 +93,7 @@ program
       case 'component':
         const componentDuplicate = fs.existsSync(`./node_modules/powerbot-cms/src/components/${name}.vue`)
         if (componentDuplicate) return console.log(chalk.red(`\nThis component name is already used. If it's not yours it's probably one of reserved names.`))
-        fs.copyFileSync('./node_modules/powerbot-cms/scripts/files/EmptyVueFile.vue', `./cms/components/${name}.vue`)
+        fs.copyFileSync('./node_modules/powerbot-cms/scripts/files/EmptyVueComponent.vue', `./cms/components/${name}.vue`)
         fs.symlinkSync(`../../../../cms/components/${name}.vue`, `./node_modules/powerbot-cms/src/components/${name}.vue`)
         console.log(chalk.green(`\n'${name}' component has been created!`))
         console.log(chalk.blue(`\nDon't forget to register component in main.js.`))
