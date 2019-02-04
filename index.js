@@ -87,7 +87,7 @@ program
         fs.copyFileSync('./node_modules/powerbot-cms/scripts/files/EmptyVueFile.vue', `./cms/views/${name}.vue`)
         fs.symlinkSync(`../../../../cms/views/${name}.vue`, `./node_modules/powerbot-cms/src/views/${name}.vue`)
         console.log(chalk.green(`\n'${name}' view has been created!`))
-        console.log(chalk.blue(`\nDon't forget to create route in router.js. You may also want to create CMS menu link in App.vue`))
+        console.log(chalk.blue(`\nDon't forget to create route in cms/vue_router.js. You may also want to create CMS menu link in CustomRoutes.js`))
         break
 
       case 'component':
@@ -96,7 +96,7 @@ program
         fs.copyFileSync('./node_modules/powerbot-cms/scripts/files/EmptyVueComponent.vue', `./cms/components/${name}.vue`)
         fs.symlinkSync(`../../../../cms/components/${name}.vue`, `./node_modules/powerbot-cms/src/components/${name}.vue`)
         console.log(chalk.green(`\n'${name}' component has been created!`))
-        console.log(chalk.blue(`\nDon't forget to register component in main.js.`))
+        console.log(chalk.blue(`\nDon't forget to register component in cms/main.js.`))
         break
       default:
         console.log(chalk.red('\nUnknown object to create.'))
