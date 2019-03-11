@@ -185,7 +185,7 @@ _See code: [src/commands/language/remove.ts](https://github.com/maxtomczyk/power
 
 ## `powerbot module [TYPE] [NAME]`
 
-Creates new component for CMS. Type paramter is `view` or `component`.
+Creates new component for CMS. Type parameter is `view` or `component`.
 
 ```
 USAGE
@@ -194,20 +194,20 @@ USAGE
 
 _See code: [src/commands/module.ts](https://github.com/maxtomczyk/powerbot-cli/blob/v2.0.0/src/commands/module.ts)_
 
-## `powerbot setup [FILE]`
+## `powerbot setup`
 
 Runs setup procedure like database import etc.
 
 ```
 USAGE
-  $ powerbot setup [FILE]
+  $ powerbot setup
 ```
 
 _See code: [src/commands/setup.ts](https://github.com/maxtomczyk/powerbot-cli/blob/v2.0.0/src/commands/setup.ts)_
 
 ## `powerbot sync:attachments [SOURCE] [TARGET]`
 
-Copy content tables (attachments, messages) from source to target
+Sync attachments table between two environments
 
 ```
 USAGE
@@ -216,18 +216,13 @@ USAGE
 
 _See code: [src/commands/sync/attachments.ts](https://github.com/maxtomczyk/powerbot-cli/blob/v2.0.0/src/commands/sync/attachments.ts)_
 
-## `powerbot sync:messages [FILE]`
+## `powerbot sync:messages [SOURCE] [TARGET]`
 
-describe the command here
+Sync messsages and groups between environments
 
 ```
 USAGE
   $ powerbot sync:messages [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
 ```
 
 _See code: [src/commands/sync/messages.ts](https://github.com/maxtomczyk/powerbot-cli/blob/v2.0.0/src/commands/sync/messages.ts)_

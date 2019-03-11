@@ -6,7 +6,7 @@ import * as keytar from 'keytar'
 import * as lodash from 'lodash'
 
 export default class Sync extends Command {
-  static description = 'Copy content tables (attachments, messages) from source to target'
+  static description = 'Sync attachments table between two environments'
   static args = [{ name: 'source' }, { name: 'target' }]
 
   async run() {

@@ -9,7 +9,6 @@ export default class Setup extends Command {
   static description = 'Runs setup procedure like database import etc.'
   static flags = {}
   static nullDir = (os.platform() === 'win32') ? 'nul' : '/dev/null'
-  static args = [{ name: 'file' }]
 
   async run() {
     const { args, flags } = this.parse(Setup)
