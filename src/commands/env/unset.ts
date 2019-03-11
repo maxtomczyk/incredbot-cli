@@ -18,7 +18,7 @@ export default class EnvRemove extends Command {
     const projectName = projectPath[projectPath.length - 1]
     const envName = args.name
     const serviceName = `${projectName}-${envName}`
-    const homedir = (process.platform === 'win32') ? process.env.HOMEPATH : process.env.HOME
+    const homedir: any = (process.platform === 'win32') ? process.env.HOMEPATH : process.env.HOME
 
     try {
       if (!fs.existsSync(path.join(homedir, '.powerbot-cli', 'environments', `${serviceName}.json`))) {

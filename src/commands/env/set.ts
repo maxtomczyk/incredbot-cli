@@ -6,6 +6,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 const { promisify } = require('util')
 
+// @ts-ignore
 readline.Interface.prototype.question[promisify.custom] = function (prompt: any) {
   return new Promise(resolve =>
     readline.Interface.prototype.question.call(this, prompt, resolve),
@@ -41,11 +42,19 @@ export default class EnvCreate extends Command {
       process.exit(0)
     }
     this.log(chalk.cyan('You need to provide connection credentials to desired database. All sensitive data will be stored in your system keychain.\n'))
-    let db = {
-      host: null,
-      user: null,
-      password: null,
-      name: null
+
+    interface DBObject {
+      host: string;
+      user: string;
+      password: string;
+      name: string;
+    }
+    
+    let db: DBObject = {
+      host: '',
+      user: '',
+      password: '',
+      name: ''
     }
 
     try {
@@ -67,7 +76,7 @@ export default class EnvCreate extends Command {
       this.log(chalk.cyan('Saved sensitive data in system keychain.'))
       delete db.user
       delete db.password
-      const homedir = (process.platform === 'win32') ? process.env.HOMEPATH : process.env.HOME
+      const homedir: any = (process.platform === 'win32') ? process.env.HOMEPATH : process.env.HOME
       if (!fs.existsSync(path.join(homedir, '.powerbot-cli'))) fs.mkdirSync(path.join(homedir, '.powerbot-cli'))
       if (!fs.existsSync(path.join(homedir, '.powerbot-cli', 'environments'))) fs.mkdirSync(path.join(homedir, '.powerbot-cli', 'environments'))
       fs.writeFileSync(path.join(homedir, '.powerbot-cli', 'environments', `${serviceName}.json`), JSON.stringify(db))

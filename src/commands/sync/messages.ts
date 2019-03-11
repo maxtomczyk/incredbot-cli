@@ -23,7 +23,7 @@ export default class Sync extends Command {
     }
 
     try {
-      const homedir = (process.platform === 'win32') ? process.env.HOMEPATH : process.env.HOME
+      const homedir: any = (process.platform === 'win32') ? process.env.HOMEPATH : process.env.HOME
       const projectPath = process.cwd().split('/')
       const projectName = projectPath[projectPath.length - 1]
       const allEnvs = fs.readdirSync(path.join(homedir, '.powerbot-cli', 'environments'))
@@ -45,12 +45,35 @@ export default class Sync extends Command {
         process.exit(0)
       }
 
-      let sourceConfig = { ssl: true }
-      let targetConfig = { ssl: true }
+      interface DBConfig {
+        ssl: boolean;
+        host: string;
+        user: string;
+        database: string;
+        password: string;
+      }
+
+      let sourceConfig: DBConfig = {
+        ssl: true,
+        user: '',
+        host: '',
+        database: '',
+        password: ''
+      }
+
+      let targetConfig: DBConfig = {
+        ssl: true,
+        user: '',
+        host: '',
+        database: '',
+        password: ''
+      }
 
       if (args.source === 'local') {
         sourceConfig = config.database
+        //@ts-ignore
         sourceConfig.database = sourceConfig.name
+        //@ts-ignore
         delete sourceConfig.name
       } else {
         const serviceName = `${projectName}-${args.source}`
@@ -64,7 +87,9 @@ export default class Sync extends Command {
 
       if (args.target === 'local') {
         targetConfig = config.database
+        //@ts-ignore
         targetConfig.database = targetConfig.name
+        //@ts-ignore
         delete targetConfig.name
       } else {
         const serviceName = `${projectName}-${args.target}`
@@ -92,8 +117,8 @@ export default class Sync extends Command {
       let sourceGroups = await sourceKnex('messages_groups')
       let targetGroups = await targetKnex('messages_groups')
 
-      const groupsToDelete = lodash.differenceBy(targetGroups, sourceGroups, 'name')
-      const groupsToCreate = lodash.differenceBy(sourceGroups, targetGroups, 'name')
+      const groupsToDelete: any = lodash.differenceBy(targetGroups, sourceGroups, 'name')
+      const groupsToCreate: any = lodash.differenceBy(sourceGroups, targetGroups, 'name')
 
       this.log(chalk.cyan(`Groups to create: ${groupsToCreate.length}`))
       this.log(chalk.cyan(`Groups to delete: ${groupsToDelete.length}`))
@@ -116,17 +141,17 @@ export default class Sync extends Command {
             this.log(chalk.cyan('\nSynchronizing messages...'))
             let updatedGroups = await trx('messages_groups')
             let queries2 = []
-            let groupsMapped = {}
-            updatedGroups.map(g => {
+            let groupsMapped: any = {}
+            updatedGroups.map((g: any) => {
               groupsMapped[g.name] = g.id
             })
 
             let sourceMessages = await sourceKnex('messages')
             let targetMessages = await trx('messages')
 
-            const messagesToUpdate = lodash.intersectionBy(sourceMessages, targetMessages, 'name')
-            const messagesToDelete = lodash.differenceBy(targetMessages, sourceMessages, 'name')
-            const messagesToCreate = lodash.differenceBy(sourceMessages, targetMessages, 'name')
+            const messagesToUpdate: any = lodash.intersectionBy(sourceMessages, targetMessages, 'name')
+            const messagesToDelete: any = lodash.differenceBy(targetMessages, sourceMessages, 'name')
+            const messagesToCreate: any = lodash.differenceBy(sourceMessages, targetMessages, 'name')
 
             this.log(chalk.cyan(`Messages to update: ${messagesToUpdate.length}`))
             this.log(chalk.cyan(`Messages to create: ${messagesToCreate.length}`))

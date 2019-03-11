@@ -9,7 +9,7 @@ export default class EnvList extends Command {
   async run() {
     if (!fs.existsSync('./node_modules/powerbot-cms')) return this.log(chalk.red('\nNot in Powerbot CMS project.\n'))
     this.log()
-    const homedir = (process.platform === 'win32') ? process.env.HOMEPATH : process.env.HOME
+    const homedir: any = (process.platform === 'win32') ? process.env.HOMEPATH : process.env.HOME
     const projectPath = process.cwd().split('/')
     const projectName = projectPath[projectPath.length - 1]
     const all = fs.readdirSync(path.join(homedir, '.powerbot-cli', 'environments'))

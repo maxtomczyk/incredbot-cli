@@ -23,7 +23,7 @@ export default class Sync extends Command {
     }
 
     try {
-      const homedir = (process.platform === 'win32') ? process.env.HOMEPATH : process.env.HOME
+      const homedir: any = (process.platform === 'win32') ? process.env.HOMEPATH : process.env.HOME
       const projectPath = process.cwd().split('/')
       const projectName = projectPath[projectPath.length - 1]
       const allEnvs = fs.readdirSync(path.join(homedir, '.powerbot-cli', 'environments'))
@@ -45,12 +45,35 @@ export default class Sync extends Command {
         process.exit(0)
       }
 
-      let sourceConfig = { ssl: true }
-      let targetConfig = { ssl: true }
+      interface DBConfig {
+        ssl: boolean;
+        host: string;
+        user: string;
+        database: string;
+        password: string;
+      }
+
+      let sourceConfig: DBConfig = {
+        ssl: true,
+        user: '',
+        host: '',
+        database: '',
+        password: ''
+      }
+
+      let targetConfig: DBConfig = {
+        ssl: true,
+        user: '',
+        host: '',
+        database: '',
+        password: ''
+      }
 
       if (args.source === 'local') {
         sourceConfig = config.database
+        //@ts-ignore
         sourceConfig.database = sourceConfig.name
+        //@ts-ignore
         delete sourceConfig.name
       } else {
         const serviceName = `${projectName}-${args.source}`
@@ -64,7 +87,9 @@ export default class Sync extends Command {
 
       if (args.target === 'local') {
         targetConfig = config.database
+        //@ts-ignore
         targetConfig.database = targetConfig.name
+        //@ts-ignore
         delete targetConfig.name
       } else {
         const serviceName = `${projectName}-${args.target}`
@@ -92,9 +117,9 @@ export default class Sync extends Command {
       let sourceAttachments = await sourceKnex('attachments').orderBy('name', 'asc')
       let targetAttachments = await targetKnex('attachments').orderBy('name', 'asc')
 
-      const attachmentsToUpdate = lodash.intersectionBy(sourceAttachments, targetAttachments, 'name')
-      const attachmentsToDelete = lodash.differenceBy(targetAttachments, sourceAttachments, 'name')
-      const attachmentsToCreate = lodash.differenceBy(sourceAttachments, targetAttachments, 'name')
+      const attachmentsToUpdate: any = lodash.intersectionBy(sourceAttachments, targetAttachments, 'name')
+      const attachmentsToDelete: any = lodash.differenceBy(targetAttachments, sourceAttachments, 'name')
+      const attachmentsToCreate: any = lodash.differenceBy(sourceAttachments, targetAttachments, 'name')
 
       await targetKnex.transaction((trx: any) => {
         let queries = []

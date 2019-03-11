@@ -40,9 +40,9 @@ USAGE
 * [`powerbot language:default [LANGORLOCALE]`](#powerbot-languagedefault-langorlocale)
 * [`powerbot language:remove [NAMEORLOCALE]`](#powerbot-languageremove-nameorlocale)
 * [`powerbot module [TYPE] [NAME]`](#powerbot-module-type-name)
-* [`powerbot setup [FILE]`](#powerbot-setup-file)
+* [`powerbot setup`](#powerbot-setup)
 * [`powerbot sync:attachments [SOURCE] [TARGET]`](#powerbot-syncattachments-source-target)
-* [`powerbot sync:messages [FILE]`](#powerbot-syncmessages-file)
+* [`powerbot sync:messages [SOURCE] [TARGET]`](#powerbot-syncmessages-source-target)
 
 ## `powerbot dev [MODULE]`
 
@@ -185,7 +185,7 @@ _See code: [src/commands/language/remove.ts](https://github.com/maxtomczyk/power
 
 ## `powerbot module [TYPE] [NAME]`
 
-Creates new component for CMS. Type parameter is `view` or `component`.
+Creates new component for CMS. Type paramter is `view` or `component`.
 
 ```
 USAGE
@@ -222,7 +222,7 @@ Sync messsages and groups between environments
 
 ```
 USAGE
-  $ powerbot sync:messages [FILE]
+  $ powerbot sync:messages [SOURCE] [TARGET]
 ```
 
 _See code: [src/commands/sync/messages.ts](https://github.com/maxtomczyk/powerbot-cli/blob/v2.0.0/src/commands/sync/messages.ts)_
