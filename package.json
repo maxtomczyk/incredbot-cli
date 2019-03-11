@@ -1,0 +1,60 @@
+{
+  "name": "powerbot-cli",
+  "description": "CLI tool for Powerbot CMS projects",
+  "version": "2.0.0",
+  "author": "Maksymilian Tomczyk <m.tomczyk.dev@gmail.com>",
+  "bin": {
+    "powerbot": "./bin/run"
+  },
+  "bugs": "https://github.com/maxtomczyk/powerbot-cli/issues",
+  "dependencies": {
+    "@oclif/command": "^1.5.11",
+    "@oclif/config": "^1.12.9",
+    "@oclif/plugin-help": "^2.1.6",
+    "@types/lodash": "^4.14.122",
+    "chalk": "^2.4.2",
+    "keytar": "^4.4.1",
+    "knex": "^0.16.3",
+    "lodash": "^4.17.11",
+    "pg": "^7.8.2",
+    "tslib": "^1.9.3"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.21.3",
+    "@types/node": "^10.12.30",
+    "globby": "^8.0.2",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.3.3333"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "homepage": "https://github.com/maxtomczyk/powerbot-cli",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "CC-BY-NC-4.0",
+  "main": "lib/index.js",
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "powerbot",
+    "plugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "repository": "maxtomczyk/powerbot-cli",
+  "scripts": {
+    "postpack": "rm -f oclif.manifest.json",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "test": "echo NO TESTS",
+    "version": "oclif-dev readme && git add README.md",
+    "postinstall": "node ./postinstall.js"
+  },
+  "types": "lib/index.d.ts"
+}
