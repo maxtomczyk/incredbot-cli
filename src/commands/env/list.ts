@@ -4,7 +4,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 
 export default class EnvList extends Command {
-  static description = 'Lists environments for current project dir'
+  static description = 'Lists environments configured for current project directory.'
 
   async run() {
     if (!fs.existsSync('./node_modules/powerbot-cms')) return this.log(chalk.red('\nNot in Powerbot CMS project.\n'))

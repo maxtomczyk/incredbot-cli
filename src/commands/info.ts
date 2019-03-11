@@ -18,6 +18,6 @@ class InfoCommand extends Command {
   }
 }
 
-InfoCommand.description = `Shows info about CLI and Powerbot CMS project`
+InfoCommand.description = `Shows informations about CLI and Powerbot CMS versions.`
 
 module.exports = InfoCommand

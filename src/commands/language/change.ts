@@ -3,7 +3,7 @@ import chalk from 'chalk'
 import * as fs from 'fs'
 
 export default class LanguageChange extends Command {
-  static description = 'Changes languege into another'
+  static description = 'Changes languege into another.'
   static flags = {}
   static args = [{name: 'nameOrLocaleToChange'}, {name: 'newLangName'}, {name: 'newLangLocale'}]
 

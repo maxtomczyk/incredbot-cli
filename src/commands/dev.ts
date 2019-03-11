@@ -4,7 +4,7 @@ import * as child from 'child_process'
 import * as fs from 'fs'
 
 export default class Dev extends Command {
-  static description = 'Starts commands set for project development\nAs module accepts `cms` or `chatbot`'
+  static description = 'Starts commands set for project development.\nAs module accepts `cms` or `chatbot`'
   static flags = {}
   static args = [{ name: 'module' }]
 

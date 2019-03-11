@@ -5,7 +5,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 
 export default class EnvRemove extends Command {
-  static description = 'Removes selected environment data from system'
+  static description = 'Removes selected environment data from system.'
 
   static args = [{ name: 'name' }]
 

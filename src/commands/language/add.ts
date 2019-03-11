@@ -3,7 +3,7 @@ import chalk from 'chalk'
 import * as fs from 'fs'
 
 export default class LanguageAdd extends Command {
-  static description = `Helps to manage languages in Powerbot CMS
+  static description = `Creates new language and messages variants for new locale.
   As locale you have to provide valid Facebook locale like en_US`
   static flags = {}
   static args = [{ name: 'name' }, { name: 'locale' }]

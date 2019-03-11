@@ -3,7 +3,7 @@ import chalk from 'chalk'
 import * as fs from 'fs'
 
 export default class LanguageDefault extends Command {
-  static description = 'Sets passed language or locale to default'
+  static description = 'Sets passed language or locale as default.'
 
   static args = [{name: 'langOrLocale'}]
 
