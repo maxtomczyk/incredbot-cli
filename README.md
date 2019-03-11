@@ -42,6 +42,7 @@ USAGE
 * [`powerbot module [TYPE] [NAME]`](#powerbot-module-type-name)
 * [`powerbot setup`](#powerbot-setup)
 * [`powerbot sync:attachments [SOURCE] [TARGET]`](#powerbot-syncattachments-source-target)
+* [`powerbot sync:elements [SOURCE] [TARGET]`](#powerbot-syncelements-source-target)
 * [`powerbot sync:messages [SOURCE] [TARGET]`](#powerbot-syncmessages-source-target)
 
 ## `powerbot dev [MODULE]`
@@ -215,6 +216,17 @@ USAGE
 ```
 
 _See code: [src/commands/sync/attachments.ts](https://github.com/maxtomczyk/powerbot-cli/blob/v2.0.0/src/commands/sync/attachments.ts)_
+
+## `powerbot sync:elements [SOURCE] [TARGET]`
+
+Sync static elements between two environments.
+
+```
+USAGE
+  $ powerbot sync:elements [SOURCE] [TARGET]
+```
+
+_See code: [src/commands/sync/elements.ts](https://github.com/maxtomczyk/powerbot-cli/blob/v2.0.0/src/commands/sync/elements.ts)_
 
 ## `powerbot sync:messages [SOURCE] [TARGET]`
 
