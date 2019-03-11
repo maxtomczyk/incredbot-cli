@@ -11,7 +11,10 @@ export default class Sync extends Command {
 
   async run() {
     const { args, flags } = this.parse(Sync)
-    if (!fs.existsSync('./node_modules/powerbot-cms')) return this.log(chalk.red('\nNot in Powerbot CMS project.\n'))
+    if (!fs.existsSync('./node_modules/powerbot-cms')) {
+      this.log(chalk.red('\nNot in Powerbot CMS project.\n'))
+      process.exit(0)
+    }
     this.log()
     if (!args.source) {
       this.log(chalk.red('You need to specify source!\n'))

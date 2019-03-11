@@ -11,7 +11,10 @@ export default class Sync extends Command {
 
   async run() {
     const { args, flags } = this.parse(Sync)
-    if (!fs.existsSync('./node_modules/powerbot-cms')) return this.log(chalk.red('\nNot in Powerbot CMS project.\n'))
+    if (!fs.existsSync('./node_modules/powerbot-cms')) {
+      this.log(chalk.red('\nNot in Powerbot CMS project.\n'))
+      process.exit(0)
+    }
     this.log()
     if (!args.source) {
       this.log(chalk.red('You need to specify source!\n'))
@@ -141,15 +144,31 @@ export default class Sync extends Command {
             this.log(chalk.cyan('\nSynchronizing messages...'))
             let updatedGroups = await trx('messages_groups')
             let queries2 = []
+            let oldGroups = await sourceKnex('messages_groups')
+            
             let groupsMapped: any = {}
             updatedGroups.map((g: any) => {
               groupsMapped[g.name] = g.id
             })
+            
+            let oldToNewGroupId: any = {}
+            oldGroups.map((og: any) => {
+              oldToNewGroupId[og.id] = groupsMapped[og.name]
+            })
 
             let sourceMessages = await sourceKnex('messages')
             let targetMessages = await trx('messages')
+            let targetMessagesMapped: any = {}
+            targetMessages.map((m: any) => {
+              targetMessagesMapped[m.name] = m
+            })
 
-            const messagesToUpdate: any = lodash.intersectionBy(sourceMessages, targetMessages, 'name')
+            const messagesToUpdate: any = lodash.intersectionBy(sourceMessages, targetMessages, 'name').filter((source: any) => {
+              let target: any = targetMessagesMapped[source.name]
+
+              if(source.friendly_name !== target.friendly_name || source.description !== target.description || !lodash.isEqual(source.json, target.json) || source.type !== target.type) return true
+              else return false
+            })
             const messagesToDelete: any = lodash.differenceBy(targetMessages, sourceMessages, 'name')
             const messagesToCreate: any = lodash.differenceBy(sourceMessages, targetMessages, 'name')
 
@@ -158,8 +177,7 @@ export default class Sync extends Command {
             this.log(chalk.cyan(`Messages to delete: ${messagesToDelete.length}`))
             this.log()
             for (const message of messagesToUpdate) {
-              let oldGroup = await sourceKnex('messages_groups').where('id', message.group_id).first()
-              let gId = groupsMapped[oldGroup.name]
+              let gId = oldToNewGroupId[message.group_id]
               queries2.push(trx('messages').update({
                 friendly_name: message.friendly_name,
                 description: message.description,
