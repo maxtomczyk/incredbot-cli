@@ -42,6 +42,7 @@ USAGE
 * [`powerbot module [TYPE] [NAME]`](#powerbot-module-type-name)
 * [`powerbot setup`](#powerbot-setup)
 * [`powerbot sync:attachments [SOURCE] [TARGET]`](#powerbot-syncattachments-source-target)
+* [`powerbot sync:channels [FILE]`](#powerbot-syncchannels-file)
 * [`powerbot sync:messages [SOURCE] [TARGET]`](#powerbot-syncmessages-source-target)
 
 ## `powerbot dev [MODULE]`

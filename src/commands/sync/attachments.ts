@@ -116,18 +116,30 @@ export default class Sync extends Command {
         connection: targetConfig
       })
 
-      this.log(chalk.cyan('Synchronizing attachments...\n'))
+      this.log(chalk.cyan('Synchronizing attachments...'))
       let sourceAttachments = await sourceKnex('attachments').orderBy('name', 'asc')
       let targetAttachments = await targetKnex('attachments').orderBy('name', 'asc')
+      let targetAttachmentsMapped: any = {}
+      targetAttachments.map((a: any) => {
+        targetAttachmentsMapped[a.name] = a
+      })
+      const attachmentsToUpdate: any = lodash.intersectionBy(sourceAttachments, targetAttachments, 'name').filter((source: any) => {
+        let target: any = targetAttachmentsMapped[source.name]
 
-      const attachmentsToUpdate: any = lodash.intersectionBy(sourceAttachments, targetAttachments, 'name')
+        if (source.friendly_name !== target.friendly_name || source.description !== target.description || source.url !== target.url) return true
+        else return false
+      })
+
       const attachmentsToDelete: any = lodash.differenceBy(targetAttachments, sourceAttachments, 'name')
       const attachmentsToCreate: any = lodash.differenceBy(sourceAttachments, targetAttachments, 'name')
+
+      this.log(chalk.cyan(`Attachments to update: ${attachmentsToUpdate.length}`))
+      this.log(chalk.cyan(`Attachments to create: ${attachmentsToCreate.length}`))
+      this.log(chalk.cyan(`Attachments to delete: ${attachmentsToDelete.length}`))
 
       await targetKnex.transaction((trx: any) => {
         let queries = []
         for (const attachment of attachmentsToUpdate) {
-          this.log(chalk.cyan(`${attachment.name} will be updated.`))
           queries.push(trx('attachments').update({
             friendly_name: attachment.friendly_name,
             description: attachment.description,
@@ -137,7 +149,6 @@ export default class Sync extends Command {
         }
 
         for (let attachment of attachmentsToCreate) {
-          this.log(chalk.cyan(`${attachment.name} will be created`))
           delete attachment.id
           delete attachment.attachment_id
           attachment.force_update = true
@@ -145,11 +156,10 @@ export default class Sync extends Command {
         }
 
         for (const attachment of attachmentsToDelete) {
-          this.log(chalk.cyan(`${attachment.name} will be destroyed`))
           queries.push(trx('attachments').where('name', attachment.name).del())
         }
 
-        this.log(chalk.cyan('Transacting all operations...'))
+        this.log(chalk.cyan('\nTransacting all operations...'))
         return Promise.all(queries)
       })
       this.log(chalk.green('\nAll attachments are now synchronized!\n'))
