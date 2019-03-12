@@ -1,7 +1,7 @@
 {
   "name": "powerbot-cli",
   "description": "CLI tool for Powerbot CMS projects",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "Maksymilian Tomczyk <m.tomczyk.dev@gmail.com>",
   "bin": {
     "powerbot": "./bin/run"
