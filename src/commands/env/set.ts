@@ -12,16 +12,21 @@ readline.Interface.prototype.question[promisify.custom] = function (prompt: any)
     readline.Interface.prototype.question.call(this, prompt, resolve),
   )
 }
+// @ts-ignore
 readline.Interface.prototype.questionAsync = promisify(
   readline.Interface.prototype.question,
 )
 
 const rl = readline.createInterface(process.stdin, process.stdout);
 
+// @ts-ignore
 rl._writeToOutput = function _writeToOutput(stringToWrite) {
+  // @ts-ignore
   if (rl.stdoutMuted)
+// @ts-ignore
     rl.output.write("\x1B[2K\x1B[200D" + rl.query + "[" + ((rl.line.length % 2 == 1) ? "=-" : "-=") + "]");
   else
+// @ts-ignore
     rl.output.write(stringToWrite);
 };
 
@@ -49,7 +54,7 @@ export default class EnvCreate extends Command {
       password: string;
       name: string;
     }
-    
+
     let db: DBObject = {
       host: '',
       user: '',
@@ -58,12 +63,20 @@ export default class EnvCreate extends Command {
     }
 
     try {
+      // @ts-ignore
       db.host = await rl.questionAsync(chalk.cyan('Database host: '))
+      // @ts-ignore
       db.user = await rl.questionAsync(chalk.cyan('Database user: '))
+      // @ts-ignore
       db.name = await rl.questionAsync(chalk.cyan('Database name: '))
+      // @ts-ignore
       rl.query = chalk.cyan('Database password: ')
+      // @ts-ignore
       rl.stdoutMuted = true
+      // @ts-ignore
       db.password = await rl.questionAsync(chalk.cyan('Database password: '))
+      // @ts-ignore
+
       rl.stdoutMuted = false
       this.log('\n')
       const serviceName = `${projectName}-${envName}`
