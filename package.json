@@ -33,7 +33,8 @@
     "/bin",
     "/lib",
     "/npm-shrinkwrap.json",
-    "/oclif.manifest.json"
+    "/oclif.manifest.json",
+    "/postinstall.js"
   ],
   "homepage": "https://github.com/maxtomczyk/powerbot-cli",
   "keywords": [
